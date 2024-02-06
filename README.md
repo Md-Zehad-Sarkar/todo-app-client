@@ -1,5 +1,9 @@
 # Todo App Client
 
+- client live site link : https://todo-app-client.netlify.app/
+- github client link : https://github.com/Md-Zehad-Sarkar/todo-app-client.git
+- simple server link : https://github.com/Md-Zehad-Sarkar/todo-app-server.git
+
 ## Technologies
 
 - react / react-router-dom
@@ -38,8 +42,8 @@
 
 - before deploy create a file likes \_redirects in your project public folder and write=> /\* /index.html 200
 - public folder
-  _redirects 
-  \* /index.html 200
+  \_redirects
+  /\* /index.html 200
 -
 - globally install netlify
 - install netlify cli : npm install netlify-cli -g
