@@ -7,16 +7,17 @@ const TodoContainer = () => {
   const { todos } = useAppSelector((state) => state.todos);
   return (
     <div className=" bg-navbar-gradient">
-      <div className="flex justify-between items-center py-2">
+      <div className="flex items-center justify-between py-2">
         <AddTodoModal />
         <TodoFilter />
       </div>
-      <div className="bg-purple-400 w-full h-full">
-        <div className="bg-red-400 grid grid-cols-12 justify-items-center py-2">
+      <div className="w-full h-full bg-purple-400">
+        <div className="grid grid-cols-12 py-2 bg-red-400 justify-items-center">
+          <h3 className="col-span-1 bg-gray-700">Checked</h3>
           <h3 className="col-span-1 bg-gray-700">Title</h3>
           <h3 className="col-span-5 bg-slate-500">Description</h3>
           <h3 className="col-span-1 bg-indigo-500">Status</h3>
-          <h3 className="col-span-5 bg-sky-500">Action</h3>
+          <h3 className="col-span-4 bg-sky-500">Action</h3>
         </div>
       </div>
       <div>
