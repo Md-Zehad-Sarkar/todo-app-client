@@ -30,7 +30,7 @@ const todoSlice = createSlice({
       const updated = state.todos.filter(
         (todo) => todo.id === action.payload?.id
       );
-      console.log("updated=>", updated);
+
       if (updated) {
         updated[0].title = title;
         updated[0].description = description;

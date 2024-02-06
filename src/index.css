@@ -74,6 +74,6 @@
     @apply bg-background text-foreground;
   }
   p{
-    @apply text-[20px] font-normal
+    @apply text-[18px] font-normal
   }
 }

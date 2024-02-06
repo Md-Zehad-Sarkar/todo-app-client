@@ -12,35 +12,37 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useAppDispatch } from "@/redux/hooks";
-import { addTodo } from "@/redux/features/todoSlice";
+import { useCreateTodoMutation } from "@/redux/api/api";
+import { Loader } from "lucide-react";
 
 const AddTodoModal = () => {
   const [title, setTitle] = useState("");
+
   const [description, setDescription] = useState("");
+
   const [priority, setPriority] = useState("");
 
-  //add todo
-  const dispatch = useAppDispatch();
+  //add todo list or create todo list
+  const [todo, { isLoading }] = useCreateTodoMutation();
+  if (isLoading) {
+    return <Loader />;
+  }
 
+  //* create todo list handler
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    const manualId = Math.random().toString(32).substring(2);
-    const todoData = {
-      id: manualId,
+    const createData = {
       title,
       description,
       priority,
       isCompleted: false,
     };
-
-    dispatch(addTodo(todoData));
+    todo(createData);
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Todo</Button>
+        <Button className="w-28 hover:bg-purple-700">Add Todo</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -84,7 +86,9 @@ const AddTodoModal = () => {
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button type="submit">Save Todo</Button>
+              <Button className="hover:bg-purple-700" type="submit">
+                Save Todo
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>

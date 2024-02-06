@@ -34,6 +34,25 @@
 
 - command on your terminal: npm run dev
 
+# Deploy proccess on netlify
+
+- before deploy create a file likes \_redirects in your project public folder and write=> /\* /index.html 200
+- public folder
+  _redirects 
+  \* /index.html 200
+-
+- globally install netlify
+- install netlify cli : npm install netlify-cli -g
+- install as save dependency locally : npm install netlify-cli --save-dev
+- login with netlify : netlify login
+- start deploy now , initialized your project : netlify init
+- What would you like to do? : Create & configure a new site (select)
+- select your account
+- build a dist file : npm run build
+  Directory to deploy (blank for current dir): (dist)
+- No netlify.toml detected. Would you like to create one with these build settings? (Y/n) press y
+- success! you deploy successfully your project on netlify.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

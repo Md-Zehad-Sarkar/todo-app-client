@@ -1,4 +1,4 @@
-import { Edit } from "lucide-react";
+import { Edit, Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -12,37 +12,52 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { updateTodo } from "@/redux/features/todoSlice";
-import { useAppDispatch } from "@/redux/hooks";
+
 import { FormEvent, useState } from "react";
+import { useUpdateTodoMutation } from "@/redux/api/api";
+
+type TUpdatesTodoModalProps = {
+  title: string;
+  description: string;
+  priority?: string;
+  _id?: string;
+};
 
 const UpdateTodoModal = ({
   title: todoTitle,
   description: todoDescription,
   priority: todoPriority,
-  id,
-}) => {
+  _id,
+}: TUpdatesTodoModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
 
+  //* update data from collection using rtk query
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
+  if (isLoading) {
+    return <Loader />;
+  }
+
   //add todo
-  const dispatch = useAppDispatch();
   const handleUpdate = (e: FormEvent) => {
     e.preventDefault();
     //update data
-    const updateData = {
-      id,
+    const updateDoc = {
       title,
       description,
       priority,
     };
-    dispatch(updateTodo(updateData));
+    const updateData = {
+      _id,
+      updateDoc,
+    };
+    updateTodo(updateData);
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="hover:bg-purple-700">
           <Edit />
         </Button>
       </DialogTrigger>
@@ -91,7 +106,9 @@ const UpdateTodoModal = ({
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button type="submit">Update Todo</Button>
+              <Button className="hover:bg-purple-700" type="submit">
+                Update Todo
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>

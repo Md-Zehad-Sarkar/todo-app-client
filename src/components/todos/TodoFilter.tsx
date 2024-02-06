@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -10,12 +10,16 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-const TodoFilter = () => {
-  const [priority, setPriority] = useState("");
+type TFilterProps = {
+  priority: string;
+  setPriority: Dispatch<SetStateAction<string>>;
+};
+
+const TodoFilter = ({ priority, setPriority }: TFilterProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Filter</Button>
+        <Button className="w-28 hover:bg-purple-700">Filter</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Set Priority</DropdownMenuLabel>
