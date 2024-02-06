@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { Edit } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -12,53 +12,58 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { updateTodo } from "@/redux/features/todoSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { addTodo } from "@/redux/features/todoSlice";
+import { FormEvent, useState } from "react";
 
-const AddTodoModal = () => {
+const UpdateTodoModal = ({
+  title: todoTitle,
+  description: todoDescription,
+  priority: todoPriority,
+  id,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
 
   //add todo
   const dispatch = useAppDispatch();
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleUpdate = (e: FormEvent) => {
     e.preventDefault();
-
-    const manualId = Math.random().toString(32).substring(2);
-    const todoData = {
-      id: manualId,
+    //update data
+    const updateData = {
+      id,
       title,
       description,
       priority,
-      isCompleted: false,
     };
-
-    dispatch(addTodo(todoData));
+    dispatch(updateTodo(updateData));
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Todo</Button>
+        <Button>
+          <Edit />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Todo</DialogTitle>
+          <DialogTitle>Update Todo</DialogTitle>
           <DialogDescription>
             Make new todo here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleUpdate}>
           <div className="grid gap-4 py-4">
             <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="title" className="text-right">
                 Todo Title
               </Label>
               <Input
-                onBlur={(e) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 id="todo-title"
                 className="col-span-3"
+                defaultValue={todoTitle}
               />
             </div>
             <div className="grid items-center grid-cols-4 gap-4">
@@ -66,9 +71,10 @@ const AddTodoModal = () => {
                 Description
               </Label>
               <Input
-                onBlur={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
                 id="description"
                 className="col-span-3"
+                defaultValue={todoDescription}
               />
             </div>
             <div className="grid items-center grid-cols-4 gap-4">
@@ -76,15 +82,16 @@ const AddTodoModal = () => {
                 Priority
               </Label>
               <Input
-                onBlur={(e) => setPriority(e.target.value)}
+                onChange={(e) => setPriority(e.target.value)}
                 id="description"
                 className="col-span-3"
+                defaultValue={todoPriority}
               />
             </div>
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button type="submit">Save Todo</Button>
+              <Button type="submit">Update Todo</Button>
             </DialogClose>
           </DialogFooter>
         </form>
@@ -93,4 +100,4 @@ const AddTodoModal = () => {
   );
 };
 
-export default AddTodoModal;
+export default UpdateTodoModal;
